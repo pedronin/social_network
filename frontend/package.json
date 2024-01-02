@@ -1,0 +1,37 @@
+{
+  "name": "c",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^5.8.4",
+    "axios": "^1.6.2",
+    "dayjs": "^1.11.10",
+    "lucide-react": "^0.292.0",
+    "next": "14.0.3",
+    "next-auth": "^4.24.5",
+    "react": "^18",
+    "react-dom": "^18",
+    "react-hook-form": "^7.48.2",
+    "react-hot-toast": "^2.4.1",
+    "sass": "^1.69.5",
+    "socket.io-client": "^4.7.2"
+  },
+  "devDependencies": {
+    "@react-hooks-library/core": "^0.5.1",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "autoprefixer": "^10.0.1",
+    "postcss": "^8",
+    "prettier": "^3.1.0",
+    "tailwind-scrollbar": "^3.0.5",
+    "tailwindcss": "^3.3.0",
+    "typescript": "^5"
+  }
+}

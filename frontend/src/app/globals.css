@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body {
+  color: #fcfcf4;
+  background: #18191d;
+}
+
+
+
+/* бэк сайдбар и попапов #282e33 */
+/* бэк чата #18191d */
+/* бэк сообщения #33393f */
+/* бэк по наведению на сообщения #313b43 */
+/* ораньжевый #ee5530 */
