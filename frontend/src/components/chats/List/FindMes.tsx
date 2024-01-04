@@ -1,16 +1,16 @@
-import { GetListChatsResp } from "@/$api";
+import { GetListChatsResp, IChat } from "@/$api";
 import { ChatsContext } from "@/components/Providers";
 import { X } from "lucide-react";
 import Image from "next/image";
 import React, { useContext } from "react";
 
 interface FindMesProps {
-  allChats: GetListChatsResp;
+  chatList: IChat[];
 }
 
-function FindMes({ allChats }: FindMesProps) {
-  const { findMes, setFindMes } = useContext(ChatsContext);
-  const currChat = allChats.find((chat) => chat.chatId === findMes);
+function FindMes({ chatList }: FindMesProps) {
+  const { findMes, setFindMes, user2 } = useContext(ChatsContext);
+  const currChat = chatList.find((chat) => chat.id === findMes);
 
   return (
     <>
@@ -22,17 +22,13 @@ function FindMes({ allChats }: FindMesProps) {
       >
         <div className="flex items-center gap-3">
           <Image
-            src={
-              currChat?.user2?.avatarUrl
-                ? currChat?.user2?.avatarUrl
-                : "/file56870.jpeg"
-            }
+            src={user2?.avatarUrl ? user2?.avatarUrl : "/file56870.jpeg"}
             width={38}
             height={38}
             alt="avatar"
             className="rounded-full object-contain"
           />
-          <p>{currChat?.user2.fullName}</p>
+          <p>{user2?.fullName}</p>
         </div>
 
         <button onClick={() => setFindMes("")}>

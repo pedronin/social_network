@@ -2,11 +2,11 @@
 
 import Input from "@/ui/Input";
 import { Paperclip, SendHorizontal } from "lucide-react";
-import React, { useState, useEffect, useRef } from "react";
-import { IMessage } from "./Chat";
+import React, { useState, useEffect } from "react";
+import { IMessage, IUser } from "@/$api";
+import { useConnectSocket } from "../../../../hooks/useConnectSocket";
+import SocketApi from "../../../../api/socket-api";
 import { chatsApi } from "@/lib/chatsApi";
-import { IUser } from "@/$api";
-
 
 interface ChatInputProps {
   setMessages: React.Dispatch<React.SetStateAction<IMessage[]>>;
@@ -16,7 +16,6 @@ interface ChatInputProps {
   notUsed: boolean;
 }
 
-
 function ChatInput({
   setMessages,
   user,
@@ -24,37 +23,14 @@ function ChatInput({
   chatId,
   notUsed,
 }: ChatInputProps) {
-  const socket = useRef<any>(null);
   const [message, setMessage] = useState("");
 
+  useConnectSocket(chatId);
 
   useEffect(() => {
-    socket.current = new WebSocket("ws://localhost:8080");
-
-    socket.current.onopen = () => {
-      socket.current.send(
-        JSON.stringify({
-          method: "connection",
-          id: chatId,
-        })
-      );
-    };
-    socket.current.onmessage = (event: any) => {
-      const newMessage = JSON.parse(event.data);
-      switch (newMessage.method) {
-        case "connection":
-          break;
-        case "message":
-          setMessages((prev) => [...prev, newMessage]);
-          break;
-      }
-    };
-    socket.current.onclose = () => {
-      console.log("Socket закрыт");
-    };
-    socket.current.onerror = () => {
-      console.log("Socket произошла ошибка");
-    };
+    SocketApi.socket?.on("client-path", (data) => {
+      setMessages((prev) => [...prev, data]);
+    });
   }, []);
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (
@@ -65,50 +41,36 @@ function ChatInput({
       return;
     }
     const sended = {
-      message: message,
-      userId: user?._id,
-      userName: user?.fullName,
-      createdAt: new Date(),
-      method: "message",
-      id: chatId,
+      userId: user?.id,
+      body: message,
+      chatId: chatId,
     };
 
     if (notUsed) {
-      await chatsApi.createUserChat({
-        userId: user?._id!,
-        user2Id: user2?._id!,
-        chatId: chatId,
+      await chatsApi.createChat({
+        name: "string",
+        id: chatId,
+        participants: [user2?.id!, user?.id!],
       });
-
-      try {
-        await chatsApi.createChats(chatId);
-      } catch (error) {
-        console.log(error);
-      }
     }
 
-    socket.current.send(JSON.stringify(sended));
+    SocketApi.socket?.emit("server-path", sended);
     setMessage("");
-
-    await chatsApi.addMessageChats({
-      chatId: chatId,
-      message: {
-        message: message,
-        userId: user?._id!,
-        createdAt: new Date(),
-      },
-    });
   };
 
   return (
-    <div className="relative shrink-0">
+    <div className="flex relative shrink-0 !bg-[#282e33]">
       <Paperclip
         width={22}
         height={22}
         color="#7b7b7b"
         className="absolute top-3 left-2"
       />
-      <form onSubmit={handleSubmit} action="">
+      <form
+        className="flex items-center w-[100%]"
+        onSubmit={handleSubmit}
+        action=""
+      >
         <Input
           value={message}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -118,7 +80,7 @@ function ChatInput({
           style="w-full h-12 pl-10 !bg-[#282e33]"
           name="message"
         />
-        <button className="absolute top-3 right-8">
+        <button className={`my-3 mr-8 ml-1 ${!message && "cursor-default"}`}>
           <SendHorizontal
             className="transition"
             stroke={`${message ? "#fc6a03" : "#fff"}`}

@@ -9,7 +9,7 @@ import {
   useEffect,
 } from "react";
 import { useRouter } from "next/navigation";
-import { IUser } from "@/$api";
+import { IChat, IUser } from "@/$api";
 import { chatsApi } from "@/lib/chatsApi";
 
 interface IChatsContext {
@@ -19,10 +19,12 @@ interface IChatsContext {
   setUser2: Dispatch<SetStateAction<IUser | null>>;
   chatId: string;
   setChatId: Dispatch<SetStateAction<string>>;
-  allChatsId: IAllChatsId;
-  setAllChatsId: Dispatch<SetStateAction<IAllChatsId>>;
+  chat: IChat | null;
+  setChat: Dispatch<SetStateAction<IChat | null>>;
   findMes: string;
   setFindMes: Dispatch<SetStateAction<string>>;
+  // allChatsId: IAllChatsId;
+  // setAllChatsId: Dispatch<SetStateAction<IAllChatsId>>;
 }
 
 type IAllChatsId = {
@@ -39,11 +41,13 @@ export default function Providers({ children }: PropsWithChildren) {
     JSON.parse(localStorage.getItem("user") || "{}")
   );
   const [user2, setUser2] = useState<IUser | null>(
-    JSON.parse(localStorage.getItem("user2") || "{}")
+    // JSON.parse(localStorage.getItem("user2") || "{}")
+    null
   );
   const [chatId, setChatId] = useState("");
-  const [allChatsId, setAllChatsId] = useState<IAllChatsId>([]);
+  const [chat, setChat] = useState<IChat | null>(null);
   const [findMes, setFindMes] = useState("");
+  // const [allChatsId, setAllChatsId] = useState<IAllChatsId>([]);
 
   // useEffect(() => {
   //   const unSubscribe = async () => {
@@ -82,8 +86,8 @@ export default function Providers({ children }: PropsWithChildren) {
         setUser2,
         chatId,
         setChatId,
-        allChatsId,
-        setAllChatsId,
+        chat,
+        setChat,
         findMes,
         setFindMes,
       }}

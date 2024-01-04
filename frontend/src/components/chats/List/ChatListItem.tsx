@@ -5,9 +5,10 @@ import Image from "next/image";
 import React, { useContext } from "react";
 import { ChatsContext } from "@/components/Providers";
 import { IUser } from "@/$api";
+import uuid from "react-uuid";
 
 interface ChatListItemProps {
-  user2: IUser;
+  user2: IUser | null;
   active: boolean;
   chatId?: string;
   lastMessage?: string;
@@ -22,12 +23,16 @@ function ChatListItem({
   active,
 }: ChatListItemProps) {
   const router = useRouter();
-  const { setUser2 } = useContext(ChatsContext);
+  const { setUser2, setChatId } = useContext(ChatsContext);
 
   const setCurrentChat = async () => {
     setUser2(user2);
     localStorage.setItem("user2", JSON.stringify(user2));
-    router.push(`/${chatId || `f${(+new Date()).toString(16)}`}`);
+
+    const chatIdN = chatId || uuid();
+    setChatId(chatIdN)
+
+    router.push(`/${chatIdN}`);
   };
 
   return (

@@ -32,15 +32,16 @@ export interface RegisterParams {
 }
 
 export interface IUser {
+  id: string;
   fullName: string;
   email: string;
-  chatsList: IChatsListItem[];
+  password: string;
   avatarUrl: string;
-  _id: string;
   createdAt: string;
   updatedAt: string;
-  __v: number;
-  token: string;
+
+  chatsList: IChat[];
+  token: any;
   status: string;
 }
 
@@ -64,3 +65,25 @@ export type GetListChatsResp = {
   chatId: string;
   user2: IUser;
 }[];
+
+export interface IChat {
+  name: string;
+  id: string;
+  body: IMessage[];
+  // participants: Omit<IUser, "chatsList">[];
+  participants: IUser[]
+}
+
+export interface IMessage {
+  body: string;
+  id: string;
+  createAt: string;
+  userId: string;
+  chatId: string;
+}
+
+export interface CreateChatParams {
+  name: string;
+  id: string;
+  participants: string[];
+}

@@ -1,9 +1,15 @@
 import { useEffect } from "react";
-import SocketApi from "../api/socet-api";
+import SocketApi from "../api/socket-api";
 
-export const useConnectSocket = () => {
+export const useConnectSocket = (chatId: string) => {
   const connectSocket = () => {
-    SocketApi.createConnection();
+    SocketApi.createConnection(chatId);
+
+    // SocketApi.socket?.on("client-path", (data) => {
+    //   console.log(data);
+    // });
+    
+    SocketApi.socket?.emit("join", chatId);
   };
 
   useEffect(() => {

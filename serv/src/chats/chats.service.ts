@@ -14,6 +14,7 @@ export class ChatsService {
           // @ts-ignore
           connect: dto?.participants.map((id: string) => ({ id })),
         },
+        id: dto.id,
       },
       include: {
         participants: true,

@@ -29,6 +29,12 @@ export class ChatsController {
     return this.chatsService.findOne(id);
   }
 
+  
+  // @Get('/:userId')
+  // getChats(@Param('userId') userId: string) {
+  //   return this.chatsService.getChatsByUserId(userId);
+  // }
+
   // потом удалить
   @Get('')
   getAll() {

@@ -8,35 +8,44 @@ export const createChatsClient = (baseURL: string) => {
 
   return {
     registerUser(params: types.RegisterParams) {
-      return http.post<types.IUser>("/auth/register", params);
+      return http.post<types.IUser>("/user/register", params);
     },
+    // сделать
     loginUser(params: types.LoginParams) {
-      return http.post<types.IUser>("/auth/login", params);
+      return http.post<types.IUser>("/user/login", params);
     },
+    // сделать
     toggleOnline(status: string, userId: string) {
       return http.post(`/auth/network/${userId}`, { status });
     },
-    getUsersByName(fullName: string) {
-      return http.get<types.IUser[]>(`/auth/users/${fullName}`);
+    getUsersByName(idOrEmailOrName: string) {
+      return http.get<types.IUser[]>(`/user/${idOrEmailOrName}`);
     },
 
     getListChats(userId: string) {
-      return http.get<types.GetListChatsResp>(`auth/chats/${userId}`);
+      return http.get<types.IChat[]>(`/user/chats/${userId}`);
     },
-    getMessages(chatId: string) {
-      return http.get(`/chat/messages/${chatId}`);
+    getChat(chatId: string) {
+      return http.get<types.IChat>(`/chats/${chatId}`);
     },
-    deleteMessages(chatId: string) {
-      return http.delete(`/chat/messages/${chatId}`);
+    createChat(params: types.CreateChatParams) {
+      return http.post<types.IChat>(`/chats`, params);
     },
-    createUserChat(chatId: types.CreateUserChatParams) {
-      return http.post("/auth/chats/create", chatId);
-    },
-    createChats(chatId: string) {
-      return http.post("chat/create", { chatId: chatId });
-    },
-    addMessageChats(params: types.AddMessageChatsParams) {
-      return http.post("/chat/message", params);
-    },
+
+    // getMessages(chatId: string) {
+    //   return http.get(`/chat/messages/${chatId}`);
+    // },
+    // deleteMessages(chatId: string) {
+    //   return http.delete(`/chat/messages/${chatId}`);
+    // },
+    // createUserChat(chatId: types.CreateUserChatParams) {
+    //   return http.post("/auth/chats/create", chatId);
+    // },
+    // createChats(chatId: string) {
+    //   return http.post("chat/create", { chatId: chatId });
+    // },
+    // addMessageChats(params: types.AddMessageChatsParams) {
+    //   return http.post("/chat/message", params);
+    // },
   };
 };

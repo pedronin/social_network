@@ -12,6 +12,10 @@ export class MessagesService {
         body: dto.body,
         chatId: dto.chatId,
       },
+      include: {
+        sender: true,
+        chat: true,
+      },
     });
   }
 

@@ -5,16 +5,8 @@ import ChatHeader from "./ChatHeader";
 import ChatInput from "./ChatInput";
 import Messages from "./Messages";
 import { chatsApi } from "@/lib/chatsApi";
-import { IUser } from "@/$api";
+import { IMessage, IUser } from "@/$api";
 import { ChatsContext } from "@/components/Providers";
-
-export interface IMessage {
-  chatId: string;
-  message: string;
-  userId: string;
-  atTime: Date;
-  createdAt: string;
-}
 
 interface ChatProps {
   chatId: string;
@@ -23,7 +15,9 @@ interface ChatProps {
 }
 
 function Chat({ chatId, user, user2 }: ChatProps) {
+  const { setChat, setUser2 } = useContext(ChatsContext);
   const [messages, setMessages] = useState<IMessage[]>([]);
+  const [notUsed, setNotUsed] = useState(false);
   const messageListRef = useRef<any>(null);
 
   // держим прокрутку чата всегда внизу
@@ -35,8 +29,14 @@ function Chat({ chatId, user, user2 }: ChatProps) {
 
   useEffect(() => {
     (async () => {
-      const { data } = await chatsApi.getMessages(chatId);
-      setMessages(data?.messages || []);
+      try {
+        const { data } = await chatsApi.getChat(chatId);
+        setChat(data || null);
+        setUser2(data.participants.find((u) => u.id !== user?.id) || null);
+        setMessages(data?.body);
+      } catch (error) {
+        setNotUsed(true);
+      }
     })();
   }, []);
 
@@ -49,7 +49,7 @@ function Chat({ chatId, user, user2 }: ChatProps) {
         messages={messages}
       />
       <ChatInput
-        notUsed={!messages.length}
+        notUsed={notUsed}
         user={user}
         user2={user2}
         chatId={chatId}

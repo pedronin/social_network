@@ -19,15 +19,25 @@ export class UserController {
   constructor(private readonly UserService: UserService) {}
 
   // createUser(@Body() dto: Partial<CreateUserDto>) {
-  @Post()
-  // @UsePipes(new ValidationPipe())
+  // @UsePipes(new ValidationPipe()x)
+  @Post('/register')
   createUser(@Body() dto) {
-    return this.UserService.create(dto);
+    return this.UserService.register(dto);
   }
 
-  @Get(':idOrEmail')
-  getUser(@Param('idOrEmail') idOrEmail: string) {
-    return this.UserService.findOne(idOrEmail);
+  @Post('/login')
+  loginUser(@Body() dto) {
+    return this.UserService.login(dto);
+  }
+
+  @Get(':idOrEmailOrName')
+  getUser(@Param('idOrEmailOrName') idOrEmailOrName: string) {
+    return this.UserService.findMany(idOrEmailOrName);
+  }
+
+  @Get('/chats/:userId')
+  getChats(@Param('userId') userId: string) {
+    return this.UserService.getChatsById(userId);
   }
 
   @Delete(':id')

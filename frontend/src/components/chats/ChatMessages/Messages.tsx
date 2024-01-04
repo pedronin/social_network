@@ -1,8 +1,7 @@
 import React from "react";
 import MessagesItem from "./MessagesItem";
-import { IMessage } from "./Chat";
-import { IUser } from "@/$api";
-import styles from './ChatMessages.module.scss';
+import { IMessage, IUser } from "@/$api";
+import styles from "./ChatMessages.module.scss";
 
 interface ChatMessageProps {
   messages: IMessage[];
@@ -20,13 +19,13 @@ function ChatMessage({ messages, user, messageListRef }: ChatMessageProps) {
         ${styles.scrollbar}
     `}
     >
-      {messages?.map((mes, i) => {
+      {messages?.map((mes) => {
         return (
           <MessagesItem
-            messageLeft={mes.userId === user?._id}
-            message={mes.message}
-            createdAt={mes.createdAt}
-            key={i}
+            messageLeft={mes.userId === user?.id}
+            message={mes.body}
+            createdAt={mes.createAt}
+            key={mes.id}
           />
         );
       })}
