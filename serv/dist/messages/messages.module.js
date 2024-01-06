@@ -11,11 +11,13 @@ const common_1 = require("@nestjs/common");
 const messages_service_1 = require("./messages.service");
 const messages_gateway_1 = require("./messages.gateway");
 const prisma_service_1 = require("../prisma.service");
+const messages_controller_1 = require("./messages.controller");
 let MessagesModule = class MessagesModule {
 };
 exports.MessagesModule = MessagesModule;
 exports.MessagesModule = MessagesModule = __decorate([
     (0, common_1.Module)({
+        controllers: [messages_controller_1.MessagesController],
         providers: [messages_gateway_1.MessagesGateway, messages_service_1.MessagesService, prisma_service_1.PrismaService],
     })
 ], MessagesModule);

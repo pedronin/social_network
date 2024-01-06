@@ -25,19 +25,13 @@ export class MessagesGateway implements OnGatewayConnection {
 
   @SubscribeMessage('server-path')
   async handleEvent(@MessageBody() dto: any, @ConnectedSocket() client: any) {
-    console.log(dto);
     const message = await this.messagesService.create(dto);
 
-    // client.to(dto?.chatId).emit('client-path', message);
-
     this.server.to(dto?.chatId).emit('client-path', message);
-
-    // console.log(client);
   }
 
   @SubscribeMessage('join')
   createRoom(@MessageBody() chatId: string, @ConnectedSocket() client: Socket) {
-    console.log('Подключился к:' + chatId);
     client.join(chatId);
   }
 

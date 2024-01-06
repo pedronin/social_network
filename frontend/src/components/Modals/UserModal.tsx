@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import { X } from "lucide-react";
+import { Bell, Info, X } from "lucide-react";
 import { IUser } from "@/$api";
 
 interface UserModalProps {
@@ -10,7 +10,10 @@ interface UserModalProps {
 
 export const UserModal = ({ user, setModal }: UserModalProps) => {
   return (
-    <div className="fixed z-50 top-0 left-0 flex justify-center w-screen h-screen bg-[#000000ad]">
+    <div
+      onClick={() => setModal(false)}
+      className="fixed z-50 top-0 left-0 flex justify-center w-screen h-screen bg-[#000000ad]"
+    >
       <div
         className="relative max-w-[395px] w-full h-fit mt-10 bg-[#303a42] rounded-[10px] 
       ss:p-4 overflow-hidden"
@@ -37,27 +40,36 @@ export const UserModal = ({ user, setModal }: UserModalProps) => {
           </div>
         </div>
         <div className="flex flex-col gap-4 mt-2 px-5 py-4 bg-[#282e33]">
-          <div className="flex flex-col gap-1 text-sm">
-            <p>{user?.email}</p>
-            <p className="text-[#9ca3af]">Почта</p>
+          <div className="flex gap-3">
+            <Info width={24} className="min-w-[21px]" />
+            <div>
+              <div className="flex flex-col gap-1 text-sm">
+                <p>{user?.email}</p>
+                <p className="text-[#9ca3af]">Почта</p>
+              </div>
+              <div className="flex flex-col gap-1 text-sm">
+                <p className="text-[#c0591d] cursor-pointer">@qpaychok</p>
+                <p className="text-[#9ca3af]">Имя пользователя</p>
+              </div>
+              <div className="flex flex-col gap-1 text-sm">
+                <span>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Dicta, eum?
+                </span>
+              </div>
+              <span className="text-[#9ca3af]">О себе</span>
+            </div>
           </div>
-          <div className="flex flex-col gap-1 text-sm">
-            <p className="text-[#c0591d] cursor-pointer">@qpaychok</p>
-            <p className="text-[#9ca3af]">Имя пользователя</p>
+
+          <div className="flex items-center gap-3">
+            <Bell width={21} />
+            <span className="text-sm text-left">Уведомления</span>
           </div>
-          <div className="flex flex-col gap-1 text-sm">
-            <span>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta,
-              eum?
-            </span>
-            <span className="text-[#9ca3af]">О себе</span>
-          </div>
-          <span className="text-sm text-left">Уведомления</span>
         </div>
         <div className="flex flex-col gap-4 mt-2 px-5 py-4 bg-[#282e33]">
-          <button className="text-sm text-left">Поделится контактом</button>
-          <button className="text-sm text-left">Изменить контакт</button>
-          <button className="text-sm text-[#d43f3f] text-left">
+          <button className="text-sm text-left cursor-default">Поделится контактом</button>
+          <button className="text-sm text-left cursor-default">Изменить контакт</button>
+          <button className="text-sm text-[#d43f3f] text-left cursor-default">
             Заблокировать
           </button>
         </div>

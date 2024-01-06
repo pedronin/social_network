@@ -7,6 +7,7 @@ import { IMessage, IUser } from "@/$api";
 import { useConnectSocket } from "../../../../hooks/useConnectSocket";
 import SocketApi from "../../../../api/socket-api";
 import { chatsApi } from "@/lib/chatsApi";
+import { useContextChat, useContextMenu } from "../../../../hooks";
 
 interface ChatInputProps {
   setMessages: React.Dispatch<React.SetStateAction<IMessage[]>>;
@@ -24,6 +25,7 @@ function ChatInput({
   notUsed,
 }: ChatInputProps) {
   const [message, setMessage] = useState("");
+  const { editMessageInfo, setEditMessageInfo } = useContextMenu();
 
   useConnectSocket(chatId);
 
@@ -33,9 +35,26 @@ function ChatInput({
     });
   }, []);
 
+  useEffect(() => {
+    if (editMessageInfo) {
+      setMessage(editMessageInfo.body);
+    }
+  }, [editMessageInfo]);
+
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (
     event
   ) => {
+    if (editMessageInfo) {
+      event.preventDefault();
+      const { data } = await chatsApi.updateMessage(editMessageInfo.id, {
+        body: message,
+      });
+      setEditMessageInfo(null);
+      setMessage("");
+      setMessages(data);
+      return;
+    }
+
     event.preventDefault();
     if (!message) {
       return;

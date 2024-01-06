@@ -46,6 +46,10 @@ export class ChatsService {
     return this.prisma.chat.delete({ where: { id } });
   }
 
+  deleteMessages(id: string) {
+    return this.prisma.message.deleteMany({ where: { chatId: id } });
+  }
+
   // потом удалить
   async getAll() {
     return await this.prisma.chat.findMany({

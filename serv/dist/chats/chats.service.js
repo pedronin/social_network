@@ -50,6 +50,9 @@ let ChatsService = class ChatsService {
         await this.findOne(id);
         return this.prisma.chat.delete({ where: { id } });
     }
+    deleteMessages(id) {
+        return this.prisma.message.deleteMany({ where: { chatId: id } });
+    }
     async getAll() {
         return await this.prisma.chat.findMany({
             include: {

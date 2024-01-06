@@ -19,8 +19,24 @@ export class MessagesService {
     });
   }
 
-  findChat(id: string) {
-    return this.prisma.chat.findFirst({ where: { id } });
+  // deleteMany(chatId: string) {
+  //   return this.prisma.message.deleteMany({ where: { chatId } });
+  // }
+
+  async delete(id: string) {
+    await this.prisma.message.delete({ where: { id: id } });
+    return this.prisma.message.findMany();
+  }
+
+  async updateMessage(id: string, dto: { body: string }) {
+    await this.prisma.message.update({
+      where: { id: id },
+      data: {
+        body: dto.body,
+      },
+    });
+
+    return this.prisma.message.findMany();
   }
 
   // findOne(id: number) {

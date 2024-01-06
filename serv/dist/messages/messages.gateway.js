@@ -21,12 +21,10 @@ let MessagesGateway = class MessagesGateway {
         this.messagesService = messagesService;
     }
     async handleEvent(dto, client) {
-        console.log(dto);
         const message = await this.messagesService.create(dto);
         this.server.to(dto?.chatId).emit('client-path', message);
     }
     createRoom(chatId, client) {
-        console.log('Подключился к:' + chatId);
         client.join(chatId);
     }
     handleConnection(client, ...args) {

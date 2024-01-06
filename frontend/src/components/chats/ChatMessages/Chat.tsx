@@ -1,31 +1,31 @@
 "use client";
 
-import React, { useState, useEffect, useRef, useContext } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import ChatHeader from "./ChatHeader";
 import ChatInput from "./ChatInput";
 import Messages from "./Messages";
 import { chatsApi } from "@/lib/chatsApi";
-import { IMessage, IUser } from "@/$api";
-import { ChatsContext } from "@/components/Providers";
+import { useParams } from "next/navigation";
+import { useContextChat, useContextMenu } from "../../../../hooks";
 
-interface ChatProps {
-  chatId: string;
-  user: IUser | null;
-  user2: IUser | null;
-}
+function Chat() {
+  const { id: chatId } = useParams<{ id: string }>();
+  const { setChat, setUser2, user, user2, setChatId, messages, setMessages } =
+    useContextChat();
 
-function Chat({ chatId, user, user2 }: ChatProps) {
-  const { setChat, setUser2 } = useContext(ChatsContext);
-  const [messages, setMessages] = useState<IMessage[]>([]);
   const [notUsed, setNotUsed] = useState(false);
-  const messageListRef = useRef<any>(null);
+  const scrollDownRef = useRef<any>(null);
 
   // держим прокрутку чата всегда внизу
   useEffect(() => {
-    if (messageListRef.current) {
-      messageListRef.current.scrollTop = messageListRef.current.scrollHeight;
+    if (scrollDownRef.current) {
+      scrollDownRef.current.scrollTop = scrollDownRef.current.scrollHeight;
     }
-  }, [messageListRef, messages]);
+  }, [scrollDownRef, messages]);
+
+  useEffect(() => {
+    setChatId(chatId);
+  }, [chatId]);
 
   useEffect(() => {
     (async () => {
@@ -44,7 +44,8 @@ function Chat({ chatId, user, user2 }: ChatProps) {
     <div className="flex flex-col content-between bg-[#18191d] h-screen">
       <ChatHeader user2={user2!} chatId={chatId} />
       <Messages
-        messageListRef={messageListRef}
+        chatId={chatId}
+        scrollDownRef={scrollDownRef}
         user={user}
         messages={messages}
       />

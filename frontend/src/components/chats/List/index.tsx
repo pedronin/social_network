@@ -4,12 +4,12 @@ import React, { useContext, useState } from "react";
 import Input from "@/ui/Input";
 import { ChatList } from "./ChatList";
 import Image from "next/image";
-import { ChatsContext } from "@/components/Providers";
 import ProfileModal from "@/components/Modals/ProfileModal";
+import { useContextChat } from "../../../../hooks";
 
 function ChatSidebar() {
   const [value, setValue] = useState("");
-  const { user, setUser } = useContext(ChatsContext);
+  const { user, setUser, findMes, setFindMes } = useContextChat()
   const [modalProf, setModalProf] = useState(false);
 
   return (
@@ -27,15 +27,19 @@ function ChatSidebar() {
         </button>
         <Input
           value={value}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setValue(e.target.value)
-          }
+          onChange={(e) => setValue(e.target.value)}
           placeholder="Поиск"
           style="rounded-3xl max-w-[300px] w-full h-9 text-[14px] bg-[#3d444b] focus:outline-none"
         />
       </div>
-      <ChatList value={value} />
-      {modalProf && <ProfileModal user={user!} setUser={setUser} setModalProf={setModalProf}  />}
+      <ChatList setSearchValue={setValue} value={value} />
+      {modalProf && (
+        <ProfileModal
+          user={user!}
+          setUser={setUser}
+          setModalProf={setModalProf}
+        />
+      )}
     </aside>
   );
 }

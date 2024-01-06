@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   Param,
+  Patch,
   Post,
   UsePipes,
   ValidationPipe,
@@ -29,11 +30,10 @@ export class ChatsController {
     return this.chatsService.findOne(id);
   }
 
-  
-  // @Get('/:userId')
-  // getChats(@Param('userId') userId: string) {
-  //   return this.chatsService.getChatsByUserId(userId);
-  // }
+  @Patch(':id')
+  deleteMessages(@Param('id') id: string) {
+    return this.chatsService.deleteMessages(id);
+  }
 
   // потом удалить
   @Get('')

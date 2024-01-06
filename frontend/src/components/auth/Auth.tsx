@@ -1,15 +1,14 @@
 "use client";
 
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FieldAuth } from "@/ui/field/FieldAuth";
-import toast from "react-hot-toast";
 import { Button } from "@/ui/button/Button";
-import { ChatsContext } from "../Providers";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { chatsApi } from "@/lib/chatsApi";
 import type { IUser, RegisterParams } from "@/$api";
+import { useContextChat } from "../../../hooks";
 
 interface IAuthForm {
   password: string;
@@ -31,7 +30,7 @@ function Auth({ type }: AuthProps) {
     mode: "onBlur",
   });
   const [isLoading, setIsLoading] = useState(false);
-  const { setUser } = useContext(ChatsContext);
+  const { setUser } = useContextChat()
 
   const onSubmit = async (data: IAuthForm) => {
     setIsLoading(true);

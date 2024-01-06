@@ -4,10 +4,6 @@ export declare class MessagesService {
     private prisma;
     constructor(prisma: PrismaService);
     create(dto: Partial<Message>): import(".prisma/client").Prisma.Prisma__MessageClient<{
-        chat: {
-            name: string;
-            id: string;
-        };
         sender: {
             id: string;
             fullName: string;
@@ -18,6 +14,10 @@ export declare class MessagesService {
             updatedAt: Date;
             status: string;
         };
+        chat: {
+            name: string;
+            id: string;
+        };
     } & {
         body: string;
         id: string;
@@ -25,8 +25,20 @@ export declare class MessagesService {
         userId: string;
         chatId: string;
     }, never, import("@prisma/client/runtime/library").DefaultArgs>;
-    findChat(id: string): import(".prisma/client").Prisma.Prisma__ChatClient<{
-        name: string;
+    delete(id: string): Promise<{
+        body: string;
         id: string;
-    }, null, import("@prisma/client/runtime/library").DefaultArgs>;
+        createAt: Date;
+        userId: string;
+        chatId: string;
+    }[]>;
+    updateMessage(id: string, dto: {
+        body: string;
+    }): Promise<{
+        body: string;
+        id: string;
+        createAt: Date;
+        userId: string;
+        chatId: string;
+    }[]>;
 }

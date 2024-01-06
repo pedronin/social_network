@@ -28,6 +28,9 @@ let ChatsController = class ChatsController {
     getChat(id) {
         return this.chatsService.findOne(id);
     }
+    deleteMessages(id) {
+        return this.chatsService.deleteMessages(id);
+    }
     getAll() {
         return this.chatsService.getAll();
     }
@@ -54,6 +57,13 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], ChatsController.prototype, "getChat", null);
+__decorate([
+    (0, common_1.Patch)(':id'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], ChatsController.prototype, "deleteMessages", null);
 __decorate([
     (0, common_1.Get)(''),
     __metadata("design:type", Function),

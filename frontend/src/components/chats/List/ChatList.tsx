@@ -1,20 +1,19 @@
 "use client";
 
-import { ChatsContext } from "@/components/Providers";
 import React, { useContext, useEffect, useState } from "react";
 import ChatListItem from "./ChatListItem";
 import { chatsApi } from "@/lib/chatsApi";
 import { IChat, IUser } from "@/$api";
-import { X } from "lucide-react";
-import Image from "next/image";
 import FindMes from "./FindMes";
+import { useContextChat } from "../../../../hooks";
 
 interface ChatListProps {
   value: string;
+  setSearchValue: any
 }
 
-export const ChatList = ({ value }: ChatListProps) => {
-  const { user, chatId, findMes, setFindMes } = useContext(ChatsContext);
+export const ChatList = ({ value, setSearchValue }: ChatListProps) => {
+  const { user, chatId, findMes, setFindMes } = useContextChat()
   const [chatList, setChatList] = useState<IChat[]>([]);
   const [findChats, setFindChats] = useState<IUser[]>([]);
 
@@ -36,7 +35,7 @@ export const ChatList = ({ value }: ChatListProps) => {
   }, [user]);
 
   if (findMes) {
-    return <FindMes chatList={chatList} />;
+    return <FindMes setSearchValue={setSearchValue} />;
   }
 
   return (

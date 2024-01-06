@@ -1,16 +1,14 @@
-import { GetListChatsResp, IChat } from "@/$api";
-import { ChatsContext } from "@/components/Providers";
 import { X } from "lucide-react";
 import Image from "next/image";
-import React, { useContext } from "react";
+import React from "react";
+import { useContextChat } from "../../../../hooks";
 
 interface FindMesProps {
-  chatList: IChat[];
+  setSearchValue: any;
 }
 
-function FindMes({ chatList }: FindMesProps) {
-  const { findMes, setFindMes, user2 } = useContext(ChatsContext);
-  const currChat = chatList.find((chat) => chat.id === findMes);
+function FindMes({ setSearchValue }: FindMesProps) {
+  const { findMes, setFindMes, user2, chat } = useContextChat()
 
   return (
     <>
@@ -31,7 +29,12 @@ function FindMes({ chatList }: FindMesProps) {
           <p>{user2?.fullName}</p>
         </div>
 
-        <button onClick={() => setFindMes("")}>
+        <button
+          onClick={() => {
+            setFindMes("");
+            setSearchValue("");
+          }}
+        >
           <X color="#9ca3af" width={23} height={23} />
         </button>
       </li>

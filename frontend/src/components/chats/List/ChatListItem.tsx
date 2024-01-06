@@ -2,10 +2,10 @@
 
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import React, { useContext } from "react";
-import { ChatsContext } from "@/components/Providers";
+import React from "react";
 import { IUser } from "@/$api";
 import uuid from "react-uuid";
+import { useContextChat } from "../../../../hooks";
 
 interface ChatListItemProps {
   user2: IUser | null;
@@ -23,14 +23,14 @@ function ChatListItem({
   active,
 }: ChatListItemProps) {
   const router = useRouter();
-  const { setUser2, setChatId } = useContext(ChatsContext);
+  const { setUser2, setChatId } = useContextChat()
 
   const setCurrentChat = async () => {
     setUser2(user2);
     localStorage.setItem("user2", JSON.stringify(user2));
 
     const chatIdN = chatId || uuid();
-    setChatId(chatIdN)
+    setChatId(chatIdN);
 
     router.push(`/${chatIdN}`);
   };
@@ -38,7 +38,7 @@ function ChatListItem({
   return (
     <li
       onClick={setCurrentChat}
-      className={`flex items-center py-2 gap-3 w-full h-[61px] min-w-[265px] pl-3 pr-2 
+      className={`flex items-center py-2 gap-3 w-full h-[61px] min-w-[265px] pl-3 pr-2 cursor-pointer
       ${active ? "bg-[#ab4700]" : "hover:bg-[#313b43]"}`}
     >
       <Image

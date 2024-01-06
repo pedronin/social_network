@@ -51,6 +51,7 @@ export declare class ChatsService {
         name: string;
         id: string;
     }>;
+    deleteMessages(id: string): import(".prisma/client").Prisma.PrismaPromise<import(".prisma/client").Prisma.BatchPayload>;
     getAll(): Promise<({
         body: {
             body: string;

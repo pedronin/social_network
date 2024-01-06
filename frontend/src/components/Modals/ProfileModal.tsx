@@ -1,7 +1,6 @@
-import React, { useContext } from "react";
+import React from "react";
 import Image from "next/image";
 import { X } from "lucide-react";
-import { ChatsContext } from "../Providers";
 import { IUser } from "@/$api";
 
 interface ProfileModalProps {
@@ -12,7 +11,10 @@ interface ProfileModalProps {
 
 function ProfileModal({ user, setUser, setModalProf }: ProfileModalProps) {
   return (
-    <div className="fixed z-50 top-0 left-0 flex justify-center w-screen h-screen bg-[#000000ad]">
+    <div
+      onClick={() => setModalProf(false)}
+      className="fixed z-50 top-0 left-0 flex justify-center w-screen h-screen bg-[#000000ad]"
+    >
       <div
         className="relative max-w-[395px] w-full h-fit mt-10 bg-[#303a42] rounded-[10px] 
       ss:p-4 overflow-hidden"
