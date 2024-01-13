@@ -103,12 +103,7 @@ let UserService = class UserService {
     async getAll() {
         return await this.prisma.user.findMany({
             include: {
-                chats: {
-                    include: {
-                        body: true,
-                        participants: true,
-                    },
-                },
+                chats: true,
             },
         });
     }

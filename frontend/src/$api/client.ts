@@ -45,5 +45,28 @@ export const createChatsClient = (baseURL: string) => {
     updateMessage(messageId: string, params: { body: string }) {
       return http.patch(`/messages/${messageId}`, params);
     },
+    deleteManyMessage(params: { ids: string[] }) {
+      return http.patch(`/messages/many`, params);
+    },
+    findMessagesByText(chatId: string, text: string) {
+      return http.get(`/messages/${chatId}?text=${text}`);
+    },
+
+    uploadImage(
+      id: string,
+      FormData: FormData,
+      params: { type: "user" | "message" | "chat" }
+    ) {
+      return axios.post<{ filePath: string }>(
+        `${baseURL}/upload/${id}`,
+        FormData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+          data: params,
+        }
+      );
+    },
   };
 };

@@ -16,8 +16,9 @@ const config: Config = {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
       transitionProperty: {
-        'accordion': 'height, margin, opacity'
-      }
+        accordion: "height, margin, opacity",
+        visibility: "visibility",
+      },
     },
     screens: {
       xl: { max: "1400px" },
@@ -32,13 +33,14 @@ const config: Config = {
       sans: ["var(--font-open-sans)"],
     },
   },
-  // plugins: [
-  //   plugin(function ({ addVariant }) {
-  //     addVariant("optional", "&:optional");
-  //     addVariant("hocus", ["&:hover", "&:focus"]);
-  //     addVariant("inverted-colors", "@media (inverted-colors: inverted)");
-  //     addVariant("not-last", "&:not(:last-child)");
-  //   }),
-  // ],
+  plugins: [
+    // @ts-ignore
+    plugin(function ({ addVariant }) {
+      addVariant("optional", "&:optional");
+      addVariant("hocus", ["&:hover", "&:focus"]);
+      addVariant("inverted-colors", "@media (inverted-colors: inverted)");
+      addVariant("not-last", "&:not(:last-child)");
+    }),
+  ],
 };
 export default config;

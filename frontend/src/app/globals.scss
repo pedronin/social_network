@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  color: #fcfcf4;
+  background: #18191d;
+  font-family: sans-serif;
+}
+
+// Библиотека смайлов
+// .epr-main {
+//   padding-bottom: 15px;
+// }
+
+.epr-body,
+.epr-category-nav,
+.epr-main {
+  background-color: #282e33;
+}
+
+.epr-body::-webkit-scrollbar {
+  width: 4px;
+}
+
+.epr-body::-webkit-scrollbar-track {
+  background: #4d5256;
+  border-radius: 6px;
+
+  &:hover {
+    background: #575c60;
+  }
+}
+
+.epr-body::-webkit-scrollbar-thumb {
+  background: #a2a5a7;
+  border-radius: 4px;
+  
+  &:hover {
+    background: #dedfe0;
+  }
+}
+
+.epr_-3yva2a {
+  display: none !important;
+}
+
+.epr_-blo395 {
+  display: none !important;
+}

@@ -27,7 +27,11 @@ let ChatsService = class ChatsService {
             },
             include: {
                 participants: true,
-                body: true,
+                body: {
+                    orderBy: {
+                        createdAt: 'asc',
+                    },
+                },
             },
         });
     }
@@ -37,7 +41,14 @@ let ChatsService = class ChatsService {
                 id,
             },
             include: {
-                body: true,
+                body: {
+                    orderBy: {
+                        createdAt: 'asc',
+                    },
+                    include: {
+                        sender: true
+                    }
+                },
                 participants: true,
             },
         });
@@ -56,7 +67,11 @@ let ChatsService = class ChatsService {
     async getAll() {
         return await this.prisma.chat.findMany({
             include: {
-                body: true,
+                body: {
+                    orderBy: {
+                        createdAt: 'asc',
+                    },
+                },
                 participants: true,
             },
         });

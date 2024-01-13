@@ -6,9 +6,11 @@ export declare class ChatsController {
         body: {
             body: string;
             id: string;
-            createAt: Date;
+            createdAt: Date;
+            updatedAt: Date;
             userId: string;
             chatId: string;
+            images: string[];
         }[];
         participants: {
             id: string;
@@ -29,13 +31,26 @@ export declare class ChatsController {
         id: string;
     }>;
     getChat(id: string): Promise<{
-        body: {
+        body: ({
+            sender: {
+                id: string;
+                fullName: string;
+                password: string;
+                email: string;
+                avatarUrl: string;
+                createdAt: Date;
+                updatedAt: Date;
+                status: string;
+            };
+        } & {
             body: string;
             id: string;
-            createAt: Date;
+            createdAt: Date;
+            updatedAt: Date;
             userId: string;
             chatId: string;
-        }[];
+            images: string[];
+        })[];
         participants: {
             id: string;
             fullName: string;
@@ -55,9 +70,11 @@ export declare class ChatsController {
         body: {
             body: string;
             id: string;
-            createAt: Date;
+            createdAt: Date;
+            updatedAt: Date;
             userId: string;
             chatId: string;
+            images: string[];
         }[];
         participants: {
             id: string;

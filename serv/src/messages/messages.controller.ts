@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
@@ -15,23 +16,29 @@ import { MessagesService } from './messages.service';
 export class MessagesController {
   constructor(private readonly messagesService: MessagesService) {}
 
-  // @Post('')
-  // createMessage(@Body() dto) {
-  //   return this.messagesService.create(dto);
-  // }
-
-  // @Patch(':chatId')
-  // deleteMessageToChat(@Param('chatId') chatId: string) {
-  //   return this.messagesService.deleteMany(chatId);
-  // }
+  @Post()
+  createOne(@Body() dto: { userId: string; body: string; chatId: string }) {
+    return this.messagesService.create(dto);
+  }
 
   @Delete(':id')
-  deleteMessage(@Param('id') id: string) {
+  deleteOne(@Param('id') id: string) {
     return this.messagesService.delete(id);
+  }
+
+  // Many
+  @Patch('/many')
+  deleteMany(@Body() dto: { ids: string[] }) {
+    return this.messagesService.deleteMany(dto.ids);
   }
 
   @Patch(':id')
   updateMessage(@Param('id') id: string, @Body() dto: { body: string }) {
-    return this.messagesService.updateMessage(id,dto);
+    return this.messagesService.updateMessage(id, dto);
+  }
+
+  @Get(':chatId')
+  findOneByText(@Query() { text }: { text: string }, @Param('chatId') chatId: string) {
+    return this.messagesService.findByText(chatId, text);
   }
 }

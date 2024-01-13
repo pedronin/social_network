@@ -19,21 +19,44 @@ let MessagesController = class MessagesController {
     constructor(messagesService) {
         this.messagesService = messagesService;
     }
-    deleteMessage(id) {
+    createOne(dto) {
+        return this.messagesService.create(dto);
+    }
+    deleteOne(id) {
         return this.messagesService.delete(id);
+    }
+    deleteMany(dto) {
+        return this.messagesService.deleteMany(dto.ids);
     }
     updateMessage(id, dto) {
         return this.messagesService.updateMessage(id, dto);
     }
+    findOneByText({ text }, chatId) {
+        return this.messagesService.findByText(chatId, text);
+    }
 };
 exports.MessagesController = MessagesController;
+__decorate([
+    (0, common_1.Post)(),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], MessagesController.prototype, "createOne", null);
 __decorate([
     (0, common_1.Delete)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
-], MessagesController.prototype, "deleteMessage", null);
+], MessagesController.prototype, "deleteOne", null);
+__decorate([
+    (0, common_1.Patch)('/many'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], MessagesController.prototype, "deleteMany", null);
 __decorate([
     (0, common_1.Patch)(':id'),
     __param(0, (0, common_1.Param)('id')),
@@ -42,6 +65,14 @@ __decorate([
     __metadata("design:paramtypes", [String, Object]),
     __metadata("design:returntype", void 0)
 ], MessagesController.prototype, "updateMessage", null);
+__decorate([
+    (0, common_1.Get)(':chatId'),
+    __param(0, (0, common_1.Query)()),
+    __param(1, (0, common_1.Param)('chatId')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, String]),
+    __metadata("design:returntype", void 0)
+], MessagesController.prototype, "findOneByText", null);
 exports.MessagesController = MessagesController = __decorate([
     (0, common_1.Controller)('messages'),
     __metadata("design:paramtypes", [messages_service_1.MessagesService])

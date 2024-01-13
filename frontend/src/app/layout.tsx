@@ -1,9 +1,13 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
+import { DM_Sans} from "next/font/google";
+import "./globals.scss";
 import Providers from "@/components/Providers";
+import { UserModal } from "@/components/Modals/UserModal";
 
-const inter = Inter({ subsets: ["latin"] });
+const poppins = DM_Sans({
+  subsets: ["latin"],
+  weight: ["200", "300", "400", "500", "600", "700"],
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -17,9 +21,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className}`}>
+      <body className={`${poppins.className}`}>
         <Providers>
           <main>{children}</main>
+          <UserModal />
         </Providers>
       </body>
     </html>

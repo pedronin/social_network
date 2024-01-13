@@ -18,19 +18,16 @@ function ChatMessage({
 }: ChatMessageProps) {
   return (
     <ul
+      id="messages"
       ref={scrollDownRef}
-      className={`
-    flex flex-col h-full px-6 mt-auto grow-1 overflow-y-scroll scrollbar-rounded 
-    scrollbar-thin scrollbar-thumb-[#5d5e5e] scrollbar-track-[#37383a]
-    ${styles.scrollbar}
-    `}
+      className={`relative flex flex-col h-full overflow-y-scroll ${styles.scrollbar_messages}`}
     >
-      {messages?.map((mes) => {
+      {messages.map((mes) => {
         return (
           <MessagesItem
-            messageLeft={mes.userId === user?.id}
+            messageRight={mes.userId === user?.id}
             message={mes}
-            createdAt={mes.createAt}
+            createdAt={mes.createdAt}
             id={mes.id}
             key={mes.id}
           />

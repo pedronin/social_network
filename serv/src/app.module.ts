@@ -3,11 +3,11 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 import { ChatsModule } from './chats/chats.module';
-import { MessageModule } from './message/message.module';
 import { MessagesModule } from './messages/messages.module';
+import { UploadModule } from './upload/upload.module';
 
 @Module({
-  imports: [UserModule, ChatsModule, MessageModule, MessagesModule],
+  imports: [UserModule, ChatsModule, MessagesModule, UploadModule],
   controllers: [AppController],
   providers: [AppService],
 })

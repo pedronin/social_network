@@ -38,7 +38,6 @@ export class UserService {
       },
     });
 
-
     if (!user) {
       throw new BadRequestException('Неверно указана почта или пороль');
     }
@@ -90,6 +89,7 @@ export class UserService {
           },
         ],
       },
+      // возможно удалить
       include: {
         chats: {
           include: {
@@ -118,12 +118,13 @@ export class UserService {
   async getAll() {
     return await this.prisma.user.findMany({
       include: {
-        chats: {
-          include: {
-            body: true,
-            participants: true,
-          },
-        },
+        chats: true,
+        // chats: {
+        //   include: {
+        //     body: true,
+        //     participants: true,
+        //   },
+        // },
       },
     });
   }

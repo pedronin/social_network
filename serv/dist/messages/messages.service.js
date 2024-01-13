@@ -22,6 +22,7 @@ let MessagesService = class MessagesService {
                 userId: dto.userId,
                 body: dto.body,
                 chatId: dto.chatId,
+                images: dto?.images,
             },
             include: {
                 sender: true,
@@ -31,16 +32,62 @@ let MessagesService = class MessagesService {
     }
     async delete(id) {
         await this.prisma.message.delete({ where: { id: id } });
-        return this.prisma.message.findMany();
+        return this.prisma.message.findMany({
+            orderBy: {
+                createdAt: 'asc',
+            },
+            include: {
+                sender: true,
+            },
+        });
     }
     async updateMessage(id, dto) {
         await this.prisma.message.update({
             where: { id: id },
             data: {
                 body: dto.body,
+                updatedAt: new Date(),
             },
         });
-        return this.prisma.message.findMany();
+        return this.prisma.message.findMany({
+            orderBy: {
+                createdAt: 'asc',
+            },
+            include: {
+                sender: true,
+            },
+        });
+    }
+    async deleteMany(ids) {
+        await this.prisma.message.deleteMany({
+            where: {
+                id: {
+                    in: ids,
+                },
+            },
+        });
+        return this.prisma.message.findMany({
+            orderBy: {
+                createdAt: 'asc',
+            },
+            include: {
+                sender: true,
+            },
+        });
+    }
+    findByText(chatId, text) {
+        return this.prisma.message.findMany({
+            where: {
+                chatId: chatId,
+                body: {
+                    contains: text,
+                    mode: 'insensitive',
+                },
+            },
+            include: {
+                sender: true,
+            },
+        });
     }
 };
 exports.MessagesService = MessagesService;

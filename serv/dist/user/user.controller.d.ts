@@ -27,9 +27,11 @@ export declare class UserController {
             body: {
                 body: string;
                 id: string;
-                createAt: Date;
+                createdAt: Date;
+                updatedAt: Date;
                 userId: string;
                 chatId: string;
+                images: string[];
             }[];
             participants: {
                 id: string;
@@ -59,9 +61,11 @@ export declare class UserController {
         body: {
             body: string;
             id: string;
-            createAt: Date;
+            createdAt: Date;
+            updatedAt: Date;
             userId: string;
             chatId: string;
+            images: string[];
         }[];
         participants: {
             id: string;
@@ -88,28 +92,10 @@ export declare class UserController {
         status: string;
     }>;
     getAllUsers(): Promise<({
-        chats: ({
-            body: {
-                body: string;
-                id: string;
-                createAt: Date;
-                userId: string;
-                chatId: string;
-            }[];
-            participants: {
-                id: string;
-                fullName: string;
-                password: string;
-                email: string;
-                avatarUrl: string;
-                createdAt: Date;
-                updatedAt: Date;
-                status: string;
-            }[];
-        } & {
+        chats: {
             name: string;
             id: string;
-        })[];
+        }[];
     } & {
         id: string;
         fullName: string;

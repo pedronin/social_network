@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import React from "react";
+import React, { useMemo } from "react";
 import { IUser } from "@/$api";
 import uuid from "react-uuid";
 import { useContextChat } from "../../../../hooks";
@@ -23,7 +23,7 @@ function ChatListItem({
   active,
 }: ChatListItemProps) {
   const router = useRouter();
-  const { setUser2, setChatId } = useContextChat()
+  const { setUser2, setChatId } = useContextChat();
 
   const setCurrentChat = async () => {
     setUser2(user2);
@@ -46,16 +46,17 @@ function ChatListItem({
         width={45}
         height={45}
         alt="avatar"
+        unoptimized
         className="rounded-full object-contain"
       />
       <div className="flex flex-col">
         <p className="">{user2?.fullName}</p>
-        <p className={`text-[13px] text-[#9ca3af] ${active && "text-[#fff]"}`}>
+        <p className={`text-[13px] text-[#8c949c] ${active && "text-[#fff]"}`}>
           last message
         </p>
       </div>
       <span
-        className={`text-[13px] text-right ml-auto h-full pt-1 text-[#9ca3af] font-light
+        className={`text-[13px] text-right ml-auto h-full pt-1 text-[#8c949c] font-light
         ${active && "text-[#fff]"}`}
       >
         15.00

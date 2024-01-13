@@ -5,12 +5,14 @@ import { Message } from '@prisma/client';
 @Injectable()
 export class MessagesService {
   constructor(private prisma: PrismaService) {}
+
   create(dto: Partial<Message>) {
     return this.prisma.message.create({
       data: {
         userId: dto.userId,
         body: dto.body,
         chatId: dto.chatId,
+        images: dto?.images,
       },
       include: {
         sender: true,
@@ -19,13 +21,16 @@ export class MessagesService {
     });
   }
 
-  // deleteMany(chatId: string) {
-  //   return this.prisma.message.deleteMany({ where: { chatId } });
-  // }
-
   async delete(id: string) {
     await this.prisma.message.delete({ where: { id: id } });
-    return this.prisma.message.findMany();
+    return this.prisma.message.findMany({
+      orderBy: {
+        createdAt: 'asc',
+      },
+      include: {
+        sender: true,
+      },
+    });
   }
 
   async updateMessage(id: string, dto: { body: string }) {
@@ -33,15 +38,53 @@ export class MessagesService {
       where: { id: id },
       data: {
         body: dto.body,
+        updatedAt: new Date(),
       },
     });
 
-    return this.prisma.message.findMany();
+    return this.prisma.message.findMany({
+      orderBy: {
+        createdAt: 'asc',
+      },
+      include: {
+        sender: true,
+      },
+    });
   }
 
-  // findOne(id: number) {
-  //   return `This action returns a #${id} message`;
-  // }
+  async deleteMany(ids: string[]) {
+    await this.prisma.message.deleteMany({
+      where: {
+        id: {
+          in: ids,
+        },
+      },
+    });
+
+    return this.prisma.message.findMany({
+      orderBy: {
+        createdAt: 'asc',
+      },
+      include: {
+        sender: true,
+      },
+    });
+  }
+
+  findByText(chatId: string, text: string) {
+    return this.prisma.message.findMany({
+      where: {
+        chatId: chatId,
+        body: {
+          contains: text,
+          mode: 'insensitive',
+        },
+      },
+      include: {
+        sender: true,
+      },
+    });
+  }
 
   // update(id: number, updateMessageDto: UpdateMessageDto) {
   //   return `This action updates a #${id} message`;

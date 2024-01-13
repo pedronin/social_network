@@ -7,9 +7,11 @@ export declare class ChatsService {
         body: {
             body: string;
             id: string;
-            createAt: Date;
+            createdAt: Date;
+            updatedAt: Date;
             userId: string;
             chatId: string;
+            images: string[];
         }[];
         participants: {
             id: string;
@@ -26,13 +28,26 @@ export declare class ChatsService {
         id: string;
     }, never, import("@prisma/client/runtime/library").DefaultArgs>;
     findOne(id: string): Promise<{
-        body: {
+        body: ({
+            sender: {
+                id: string;
+                fullName: string;
+                password: string;
+                email: string;
+                avatarUrl: string;
+                createdAt: Date;
+                updatedAt: Date;
+                status: string;
+            };
+        } & {
             body: string;
             id: string;
-            createAt: Date;
+            createdAt: Date;
+            updatedAt: Date;
             userId: string;
             chatId: string;
-        }[];
+            images: string[];
+        })[];
         participants: {
             id: string;
             fullName: string;
@@ -56,9 +71,11 @@ export declare class ChatsService {
         body: {
             body: string;
             id: string;
-            createAt: Date;
+            createdAt: Date;
+            updatedAt: Date;
             userId: string;
             chatId: string;
+            images: string[];
         }[];
         participants: {
             id: string;

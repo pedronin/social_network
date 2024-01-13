@@ -71,15 +71,18 @@ export interface IChat {
   id: string;
   body: IMessage[];
   // participants: Omit<IUser, "chatsList">[];
-  participants: IUser[]
+  participants: IUser[];
 }
 
 export interface IMessage {
   body: string;
   id: string;
-  createAt: string;
+  createdAt: string;
+  updatedAt: string;
   userId: string;
   chatId: string;
+  sender: IUser;
+  images: string[];
 }
 
 export interface CreateChatParams {

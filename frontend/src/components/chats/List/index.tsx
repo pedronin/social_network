@@ -1,16 +1,24 @@
 "use client";
 
-import React, { useContext, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Input from "@/ui/Input";
 import { ChatList } from "./ChatList";
 import Image from "next/image";
-import ProfileModal from "@/components/Modals/ProfileModal";
 import { useContextChat } from "../../../../hooks";
+import { ProfileModal } from "./ProfileModal";
 
 function ChatSidebar() {
   const [value, setValue] = useState("");
-  const { user, setUser, findMes, setFindMes } = useContextChat()
+  const { user, findMes } = useContextChat();
   const [modalProf, setModalProf] = useState(false);
+
+  const refInput = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (findMes) {
+      refInput.current?.focus();
+    }
+  }, [findMes]);
 
   return (
     <aside className="bg-[#282e33] py-3">
@@ -21,11 +29,13 @@ function ChatSidebar() {
             src={user?.avatarUrl || "/file56870.jpeg"}
             width={45}
             height={45}
+            unoptimized
             alt="avatar"
             className="rounded-full object-contain"
           />
         </button>
         <Input
+          ref={refInput}
           value={value}
           onChange={(e) => setValue(e.target.value)}
           placeholder="Поиск"
@@ -33,13 +43,7 @@ function ChatSidebar() {
         />
       </div>
       <ChatList setSearchValue={setValue} value={value} />
-      {modalProf && (
-        <ProfileModal
-          user={user!}
-          setUser={setUser}
-          setModalProf={setModalProf}
-        />
-      )}
+      {modalProf && <ProfileModal user={user!} setModal={setModalProf} />}
     </aside>
   );
 }

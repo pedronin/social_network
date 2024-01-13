@@ -12,14 +12,14 @@ const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
 const user_module_1 = require("./user/user.module");
 const chats_module_1 = require("./chats/chats.module");
-const message_module_1 = require("./message/message.module");
 const messages_module_1 = require("./messages/messages.module");
+const upload_module_1 = require("./upload/upload.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
-        imports: [user_module_1.UserModule, chats_module_1.ChatsModule, message_module_1.MessageModule, messages_module_1.MessagesModule],
+        imports: [user_module_1.UserModule, chats_module_1.ChatsModule, messages_module_1.MessagesModule, upload_module_1.UploadModule],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],
     })
